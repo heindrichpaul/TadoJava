@@ -1,43 +1,31 @@
 package com.heindrich.tado;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.json.JSONObject;
 
+@RequiredArgsConstructor
+@Getter
+@EqualsAndHashCode
+@ToString
 public abstract class Termination {
-	private final String type;
-	private String typeSkillBasedApp;
-	private Date projectedExpiry;
+    private final String type;
+    private final String typeSkillBasedApp;
+    private final LocalDateTime projectedExpiry;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-	public String getType() {
-		return type;
-	}
 
-	public String getTypeSkillBasedApp() {
-		return typeSkillBasedApp;
-	}
+    protected Termination(String type) {
+        this.type = type;
+        this.typeSkillBasedApp = "";
+        this.projectedExpiry = LocalDateTime.now();
+    }
 
-	public Date getprojectedExpiry() {
-		return projectedExpiry;
-	}
-
-	protected Termination(String type, String typeSkillBasedApp, Date projectedExpiry) {
-		super();
-		this.type = type;
-		this.typeSkillBasedApp = typeSkillBasedApp;
-		this.projectedExpiry = projectedExpiry;
-	}
-
-	protected Termination(String type) {
-		super();
-		this.type = type;
-	}
-
-	public abstract JSONObject toJSONObject();
-
-	@Override
-	public String toString() {
-		return "Termination [type=" + type + ", typeSkillBasedApp=" + typeSkillBasedApp + ", projectedExpiry="
-				+ projectedExpiry + "]";
-	}
+    public abstract JSONObject toJSONObject();
 }

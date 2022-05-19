@@ -1,5 +1,6 @@
 package com.heindrich.tado;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
@@ -8,7 +9,7 @@ import org.json.JSONObject;
 
 public class TadoModeTermination extends Termination {
 
-	public TadoModeTermination(String typeSkillBasedApp, Date projectedExpiry) {
+	public TadoModeTermination(String typeSkillBasedApp, LocalDateTime projectedExpiry) {
 		super("TADO_MODE", typeSkillBasedApp, projectedExpiry);
 	}
 
@@ -20,11 +21,10 @@ public class TadoModeTermination extends Termination {
 	public JSONObject toJSONObject() {
 		JSONObject root = new JSONObject();
 		root.put("type", this.getType());
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
 		if (this.getTypeSkillBasedApp() != null)
 			root.put("typeSkillBasedApp", this.getTypeSkillBasedApp());
-		if (this.getprojectedExpiry() != null)
-			root.put("projectedExpiry", dtf.format(this.getprojectedExpiry().toInstant()));
+		if (this.getProjectedExpiry() != null)
+			root.put("projectedExpiry", this.getProjectedExpiry().format(this.getFormatter()));
 		return root;
 	}
 
